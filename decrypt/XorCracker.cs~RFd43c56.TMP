@@ -1,0 +1,106 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace decrypt
+{
+    class XorCracker
+    {
+
+        private int knownKeyLength = 4;
+        private string key;
+        private string textqqch;
+
+        public XorCracker()
+        {
+            textqqch = System.IO.File.ReadAllText("C:/Users/Arnaud RIGAUT/Desktop/exia/UE crypto/proj/PB.txt");
+            key = "ryhtps";
+        }
+
+        public static byte[] ConvertToByteArray(string str, Encoding encoding)
+        {
+            return encoding.GetBytes(str);
+        }
+
+        public static String ToBinary(Byte[] data)
+        {
+            return string.Join(" ", data.Select(byt => Convert.ToString(byt, 2).PadLeft(8, '0')));
+        }
+     
+
+        public void test()
+        {
+
+            byte[] bytes = Encoding.ASCII.GetBytes(textqqch);
+            string[] b = bytes.Select(x => Convert.ToString(x, 2).PadLeft(8, '0')).ToArray();
+            byte[] bytesKey = Encoding.ASCII.GetBytes(key);
+            string[] c = bytesKey.Select(x => Convert.ToString(x, 2).PadLeft(8, '0')).ToArray();
+            string testt = "";
+
+            string str = "ABC";
+            char[] charArry = str.ToCharArray();
+            permute(charArry, 0, 2);
+            Console.ReadKey();
+
+
+            for (int i = 312; i < b.Length; i++)
+            {
+                //testt += (char)Convert.ToInt16(XOR(b[i], c[i % 6]), 2);
+                Console.WriteLine(b[i]);
+                Console.WriteLine(c[i%6]);
+                Console.WriteLine(Convert.ToInt32(XOR(b[i], c[i % 6]), 2));
+            }
+
+            Console.WriteLine(testt);
+            Console.ReadKey();
+
+        }
+
+        public string XOR(String text, String key)
+        {
+            String result = "";
+
+            for (int i = 0; i < text.Length; i++)
+            {
+                if (text[i] == key[i])
+                {
+                    result += "0";
+                }
+                else
+                {
+                    result += "1";
+                }
+            }
+            return result;
+        }
+
+        static void permute(char[] arry, int i, int n)
+        {
+            int j;
+            if (i == n)
+                Console.WriteLine(arry);
+            else
+            {
+                for (j = i; j <= n; j++)
+                {
+                    swap(ref arry[i], ref arry[j]);
+                    permute(arry, i + 1, n);
+                    swap(ref arry[i], ref arry[j]); //backtrack
+                }
+            }
+        }
+
+        static void swap(ref char a, ref char b)
+        {
+            char tmp;
+            tmp = a;
+            a = b;
+            b = tmp;
+        }
+
+
+    }
+}
