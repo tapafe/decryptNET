@@ -18,21 +18,21 @@ namespace decrypt
 
             Console.WriteLine(keyList.Count);
 
-            DirectoryInfo di = new DirectoryInfo(@"C:\Users\Arnaud RIGAUT\Desktop\exia\projet dev\txt");
+            DirectoryInfo di = new DirectoryInfo(@"C:\Users\Arnaud RIGAUT\Desktop\EI A4 SPEINF DOMDEV FICHIERS PROJET ETUDIANTS");
             foreach (var fi in di.GetFiles())
             {
                 Console.WriteLine(fi.Name);
                 txtList.Add(fi.Name);
             }
 
-            XorCracker x = new XorCracker(keyList);
+            XorCracker xorClass = new XorCracker(keyList);
 
-            Parallel.ForEach(txtList, (currentFile) =>
+            foreach (var currentFile in txtList)
             {
                 string filename = Path.GetFileName(currentFile);
-                string filecontent = File.ReadAllText($"C:\\Users\\Arnaud RIGAUT\\Desktop\\exia\\projet dev\\txt\\{currentFile}");
-                x.test(filecontent);
-            });
+                string filecontent = File.ReadAllText($"C:\\Users\\Arnaud RIGAUT\\Desktop\\EI A4 SPEINF DOMDEV FICHIERS PROJET ETUDIANTS\\{currentFile}");
+                xorClass.crack(filecontent);
+            }
         }
     }
 }

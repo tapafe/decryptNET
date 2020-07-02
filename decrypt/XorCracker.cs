@@ -17,8 +17,9 @@ namespace decrypt
             keyList = keyListParam;
         }
 
-        public void test(String text)
+        public void crack(String text)
         {
+            Console.WriteLine(text);
             foreach (var item in keyList)
             {
                 key = item;
@@ -33,7 +34,9 @@ namespace decrypt
                 {
                     txtDecode += (char)Convert.ToInt16(XOR(binaryText[i], binaryKey[i % 4]), 2);
                 }
-            }
+
+                Console.WriteLine(txtDecode);
+             }
         }
 
         public string XOR(String text, String key)
