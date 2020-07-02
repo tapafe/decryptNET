@@ -25,14 +25,13 @@ namespace decrypt
                 txtList.Add(fi.Name);
             }
 
-            XorCracker xorClass = new XorCracker(keyList);
-
-            foreach (var currentFile in txtList)
+            Parallel.ForEach(txtList, (currentFile) =>
             {
                 string filename = Path.GetFileName(currentFile);
-                string filecontent = File.ReadAllText($"C:\\Users\\Arnaud RIGAUT\\Desktop\\EI A4 SPEINF DOMDEV FICHIERS PROJET ETUDIANTS\\{currentFile}");
+                string filecontent = File.ReadAllText($"C:\\Users\\Arnaud RIGAUT\\Desktop\\EI A4 SPEINF DOMDEV FICHIERS PROJET ETUDIANTS\\{filename}");
+                XorCracker xorClass = new XorCracker(keyList);
                 xorClass.crack(filecontent);
-            }
+            });
         }
     }
 }
